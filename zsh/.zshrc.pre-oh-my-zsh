@@ -1,0 +1,27 @@
+
+alias c='clear'
+alias ls='ls -G'
+alias ut='update_tags'
+alias cdq='cd Projects/qemu'
+
+export GOPATH=$HOME/Projects/gowork
+
+export PATH=/usr/local/bin:$PATH
+export PATH=$PATH:$GOPATH/bin
+
+export GIT_PS1_SHOWDIRTYSTATE=1
+
+setopt PROMPT_SUBST ; PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
+. ~/.zsh/git-prompt.sh
+zstyle ':completion:*:*:git*:' script ~/.zsh/git-completion.bash
+
+
+fpath=(~/.zsh $fpath)
+autoload -Uz compinit && compinit
+
+
+
+
+update_tags() {
+	find . -type f -regex '.*\.[chS]' -o -regex '.*\.cpp' > csfiles; cscope -i csfiles -b; rm -f csfiles
+}
